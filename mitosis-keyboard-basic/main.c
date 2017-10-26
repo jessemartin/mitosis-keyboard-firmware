@@ -23,20 +23,20 @@ const nrf_drv_rtc_t rtc_deb = NRF_DRV_RTC_INSTANCE(1); /**< Declaring an instanc
 #define TX_PAYLOAD_LENGTH 3 ///< 3 byte payload length when transmitting
 
 // Data and acknowledgement payloads
-static uint8_t data_payload[TX_PAYLOAD_LENGTH];                ///< Payload to send to Host. 
+static uint8_t data_payload[TX_PAYLOAD_LENGTH];                ///< Payload to send to Host.
 static uint8_t ack_payload[NRF_GZLL_CONST_MAX_PAYLOAD_LENGTH]; ///< Placeholder for received ACK payloads from Host.
 
 // Debounce time (dependent on tick frequency)
-#define DEBOUNCE 5
+#define DEBOUNCE 3
 #define ACTIVITY 500
 
 // Key buffers
-static uint32_t keys, keys_snapshot;
+static uint32_t keys, keys_snapshot, current_keys;
 static uint32_t debounce_ticks, activity_ticks;
 static volatile bool debouncing = false;
 
 // Debug helper variables
-static volatile bool init_ok, enable_ok, push_ok, pop_ok, tx_success;  
+static volatile bool init_ok, enable_ok, push_ok, pop_ok, tx_success;
 
 // Setup switch pins with pullups
 static void gpio_config(void)
@@ -114,11 +114,12 @@ static void handler_maintenance(nrf_drv_rtc_int_type_t int_type)
 // 1000Hz debounce sampling
 static void handler_debounce(nrf_drv_rtc_int_type_t int_type)
 {
+  current_keys = read_keys();
     // debouncing, waits until there have been no transitions in 5ms (assuming five 1ms ticks)
     if (debouncing)
     {
         // if debouncing, check if current keystates equal to the snapshot
-        if (keys_snapshot == read_keys())
+        if (keys_snapshot == current_keys)
         {
             // DEBOUNCE ticks of stable sampling needed before sending data
             debounce_ticks++;
@@ -138,16 +139,16 @@ static void handler_debounce(nrf_drv_rtc_int_type_t int_type)
     {
         // if the keystate is different from the last data
         // sent to the receiver, start debouncing
-        if (keys != read_keys())
+        if (keys != current_keys)
         {
-            keys_snapshot = read_keys();
+            keys_snapshot = current_keys;
             debouncing = true;
             debounce_ticks = 0;
         }
     }
 
     // looking for 500 ticks of no keys pressed, to go back to deep sleep
-    if (read_keys() == 0)
+    if (current_keys == 0)
     {
         activity_ticks++;
         if (activity_ticks > ACTIVITY)
@@ -192,8 +193,8 @@ int main()
 {
     // Initialize Gazell
     nrf_gzll_init(NRF_GZLL_MODE_DEVICE);
-    
-    // Attempt sending every packet up to 100 times    
+
+    // Attempt sending every packet up to 100 times
     nrf_gzll_set_max_tx_attempts(100);
 
     // Addressing
@@ -204,7 +205,7 @@ int main()
     nrf_gzll_enable();
 
     // Configure 32kHz xtal oscillator
-    lfclk_config(); 
+    lfclk_config();
 
     // Configure RTC peripherals with ticks
     rtc_config();
@@ -222,7 +223,7 @@ int main()
     {
         __SEV();
         __WFE();
-        __WFE(); 
+        __WFE();
     }
 }
 
@@ -252,7 +253,7 @@ void GPIOTE_IRQHandler(void)
 
 void  nrf_gzll_device_tx_success(uint32_t pipe, nrf_gzll_device_tx_info_t tx_info)
 {
-    uint32_t ack_payload_length = NRF_GZLL_CONST_MAX_PAYLOAD_LENGTH;    
+    uint32_t ack_payload_length = NRF_GZLL_CONST_MAX_PAYLOAD_LENGTH;
 
     if (tx_info.payload_received_in_ack)
     {
@@ -264,7 +265,7 @@ void  nrf_gzll_device_tx_success(uint32_t pipe, nrf_gzll_device_tx_info_t tx_inf
 // no action is taken when a packet fails to send, this might need to change
 void nrf_gzll_device_tx_failed(uint32_t pipe, nrf_gzll_device_tx_info_t tx_info)
 {
-    
+
 }
 
 // Callbacks not needed
@@ -272,4 +273,3 @@ void nrf_gzll_host_rx_data_ready(uint32_t pipe, nrf_gzll_host_rx_info_t rx_info)
 {}
 void nrf_gzll_disabled()
 {}
-
