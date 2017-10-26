@@ -1,3 +1,5 @@
+# A fork of https://github.com/reversebias/mitosis
+
 # Mitosis Keyboard Firmware
 Firmware for Nordic MCUs used in the Mitosis Keyboard, contains precompiled .hex files, as well as sources buildable with the Nordic SDK
 
