@@ -3,7 +3,7 @@ Firmware for Nordic MCUs used in the Mitosis Keyboard, contains precompiled .hex
 
 ## Install dependencies
 
-Tested on Ubuntu 16.04.2, but should be able to find alternatives on all distros. 
+Tested on Ubuntu 16.04.2, but should be able to find alternatives on all distros.
 
 ```
 sudo apt install openocd gcc-arm-none-eabi
@@ -24,13 +24,13 @@ cd nRF5_SDK_11
 
 ## Toolchain set-up
 
-A cofiguration file that came with the SDK needs to be changed. Assuming you installed gcc-arm with apt, the compiler root path needs to be changed in /components/toolchain/gcc/Makefile.posix, the line:
+A configuration file that came with the SDK needs to be changed. Assuming you installed gcc-arm with apt, the compiler root path needs to be changed in /components/toolchain/gcc/Makefile.posix, the line:
 ```
 GNU_INSTALL_ROOT := /usr/local/gcc-arm-none-eabi-4_9-2015q1
 ```
 Replaced with:
 ```
-GNU_INSTALL_ROOT := /usr/
+GNU_INSTALL_ROOT := /usr/local/Cellar/gcc-arm-none-eabi/20160928
 ```
 
 ## Clone repository
@@ -86,22 +86,3 @@ cd mitosis/mitosis-keyboard-basic
 ./program.sh
 ```
 An openocd session should be running in another terminal, as this script sends commands to it.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
