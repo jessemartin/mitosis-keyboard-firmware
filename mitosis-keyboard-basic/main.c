@@ -198,8 +198,8 @@ int main()
     nrf_gzll_set_max_tx_attempts(100);
 
     // Addressing
-    nrf_gzll_set_base_address_0(0x01020304);
-    nrf_gzll_set_base_address_1(0x05060708);
+    nrf_gzll_set_base_address_0(0x01030304);
+    nrf_gzll_set_base_address_1(0x05030308);
 
     // Enable Gazell to start sending over the air
     nrf_gzll_enable();
