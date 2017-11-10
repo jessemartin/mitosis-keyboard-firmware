@@ -91,8 +91,8 @@ int main(void)
     nrf_gzll_init(NRF_GZLL_MODE_HOST);
 
     // Addressing
-    nrf_gzll_set_base_address_0(0x01020304);
-    nrf_gzll_set_base_address_1(0x05060708);
+    nrf_gzll_set_base_address_0(0x01030304);
+    nrf_gzll_set_base_address_1(0x05030308);
 
     // Load data into TX queue
     ack_payload[0] = 0x55;
