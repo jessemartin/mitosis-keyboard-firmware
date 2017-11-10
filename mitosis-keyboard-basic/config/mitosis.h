@@ -1,7 +1,7 @@
 
 #define HAND_SENSE 12
-#define RIGHT_HAND false
-#define LEFT_HAND true
+#define RIGHT_HAND true
+#define LEFT_HAND false
 
 #define ALPHA_SENSE 20
 #define ALPABETICAL false
@@ -85,6 +85,11 @@
 #define R_S21 23
 #define R_S22 22
 #define R_S23 21
+#define R_S24 20
+#define R_S25 18
+#define R_S26 11
+#define R_S27 12
+#define R_S28 16
 
 #define R_MASK (1<<R_S01 | \
  				1<<R_S02 | \
@@ -108,7 +113,12 @@
 				1<<R_S20 | \
 				1<<R_S21 | \
 				1<<R_S22 | \
-				1<<R_S23)
+				1<<R_S23 | \
+				1<<R_S24 | \
+				1<<R_S25 | \
+				1<<R_S26 | \
+				1<<R_S27 | \
+				1<<R_S28) | \
 
 #ifdef COMPILE_LEFT
 
@@ -173,6 +183,11 @@
 #define S21 R_S21
 #define S22 R_S22
 #define S23 R_S23
+#define S24 R_S24
+#define S25 R_S25
+#define S26 R_S26
+#define S27 R_S27
+#define S28 R_S28
 
 #define INPUT_MASK R_MASK
 
