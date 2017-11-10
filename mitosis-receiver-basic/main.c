@@ -143,6 +143,8 @@ int main(void)
                              ((data_payload_left[2] & 1<<2) ? 1:0) << 2 |
                              ((data_payload_left[2] & 1<<3) ? 1:0) << 3 |
                              ((data_payload_left[2] & 1<<4) ? 1:0) << 4;
+
+            data_buffer[10] = 0 << 0;
         }
 
         if (packet_received_right)

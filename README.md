@@ -69,6 +69,8 @@ Otherwise you likely have a loose or wrong wire.
 
 
 ## Manual programming
+First, install `brew install coreutils` to allow greadlink to work.
+
 From the factory, these chips need to be erased:
 ```
 echo reset halt | telnet localhost 4444
@@ -77,11 +79,13 @@ echo nrf51 mass_erase | telnet localhost 4444
 From there, the precompiled binaries can be loaded:
 ```
 echo reset halt | telnet localhost 4444
-echo flash write_image `readlink -f precompiled-basic-left.hex` | telnet localhost 4444
+echo flash write_image `greadlink -f precompiled-basic-left.hex` | telnet localhost 4444
 echo reset | telnet localhost 4444
 ```
 
 ## Automatic make and programming scripts
+First, install `brew install coreutils` to allow greadlink to work.
+
 To use the automatic build scripts:
 ```
 cd mitosis/mitosis-keyboard-basic
