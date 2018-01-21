@@ -97,39 +97,39 @@ int main(void) {
     if (packet_received_left) {
       packet_received_left = false;
 
-      // [3,4,5,6,7]
-      // [a,a,0,1,2]
-      // [1,2,3,4,5]
-      // [b,b,b,0, ]
-      // [1,2,3,4, ]
+      data_buffer[0] = ((data_payload_left[0] & 1 << 7) ? 1 : 0) << 0 |
+                       ((data_payload_left[0] & 1 << 6) ? 1 : 0) << 1 |
+                       ((data_payload_left[0] & 1 << 5) ? 1 : 0) << 2 |
+                       ((data_payload_left[0] & 1 << 4) ? 1 : 0) << 3 |
+                       ((data_payload_left[0] & 1 << 3) ? 1 : 0) << 4;
 
-      data_buffer[0] = ((data_payload_left[0] & 1<<3) ? 1:0) << 0 |
-                       ((data_payload_left[0] & 1<<4) ? 1:0) << 1 |
-                       ((data_payload_left[0] & 1<<5) ? 1:0) << 2 |
-                       ((data_payload_left[0] & 1<<6) ? 1:0) << 3 |
-                       ((data_payload_left[0] & 1<<7) ? 1:0) << 4;
+      data_buffer[2] = ((data_payload_left[0] & 1 << 2) ? 1 : 0) << 0 |
+                       ((data_payload_left[0] & 1 << 1) ? 1 : 0) << 1 |
+                       ((data_payload_left[0] & 1 << 0) ? 1 : 0) << 2 |
+                       ((data_payload_left[1] & 1 << 7) ? 1 : 0) << 3 |
+                       ((data_payload_left[1] & 1 << 6) ? 1 : 0) << 4;
 
-      data_buffer[2] = ((data_payload_left[1] & 1<<6) ? 1:0) << 0 |
-                       ((data_payload_left[1] & 1<<7) ? 1:0) << 1 |
-                       ((data_payload_left[0] & 1<<0) ? 1:0) << 2 |
-                       ((data_payload_left[0] & 1<<1) ? 1:0) << 3 |
-                       ((data_payload_left[0] & 1<<2) ? 1:0) << 4;
+      data_buffer[4] = ((data_payload_left[1] & 1 << 5) ? 1 : 0) << 0 |
+                       ((data_payload_left[1] & 1 << 4) ? 1 : 0) << 1 |
+                       ((data_payload_left[1] & 1 << 3) ? 1 : 0) << 2 |
+                       ((data_payload_left[1] & 1 << 2) ? 1 : 0) << 3 |
+                       ((data_payload_left[1] & 1 << 1) ? 1 : 0) << 4;
 
-      data_buffer[4] = ((data_payload_left[1] & 1<<1) ? 1:0) << 0 |
-                       ((data_payload_left[1] & 1<<2) ? 1:0) << 1 |
-                       ((data_payload_left[1] & 1<<3) ? 1:0) << 2 |
-                       ((data_payload_left[1] & 1<<4) ? 1:0) << 3 |
-                       ((data_payload_left[1] & 1<<5) ? 1:0) << 4;
+      data_buffer[6] = ((data_payload_left[1] & 1 << 0) ? 1 : 0) << 0 |
+                       ((data_payload_left[2] & 1 << 7) ? 1 : 0) << 1 |
+                       ((data_payload_left[2] & 1 << 6) ? 1 : 0) << 2 |
+                       ((data_payload_left[2] & 1 << 5) ? 1 : 0) << 3 |
+                       ((data_payload_left[2] & 1 << 4) ? 1 : 0) << 4;
 
-      data_buffer[6] = ((data_payload_left[2] & 1<<5) ? 1:0) << 1 |
-                       ((data_payload_left[2] & 1<<6) ? 1:0) << 2 |
-                       ((data_payload_left[2] & 1<<7) ? 1:0) << 3 |
-                       ((data_payload_left[1] & 1<<0) ? 1:0) << 4;
+      data_buffer[8] = ((data_payload_left[2] & 1 << 3) ? 1 : 0) << 0 |
+                       ((data_payload_left[2] & 1 << 2) ? 1 : 0) << 1 |
+                       ((data_payload_left[2] & 1 << 1) ? 1 : 0) << 2 |
+                       ((data_payload_left[2] & 1 << 0) ? 1 : 0) << 3 |
+                       ((data_payload_left[3] & 1 << 7) ? 1 : 0) << 4;
 
-      data_buffer[8] = ((data_payload_left[2] & 1<<1) ? 1:0) << 1 |
-                       ((data_payload_left[2] & 1<<2) ? 1:0) << 2 |
-                       ((data_payload_left[2] & 1<<3) ? 1:0) << 3 |
-                       ((data_payload_left[2] & 1<<4) ? 1:0) << 4;
+      data_buffer[10] = ((data_payload_left[3] & 1 << 6) ? 1 : 0) << 0 |
+                        ((data_payload_left[3] & 1 << 5) ? 1 : 0) << 1 |
+                        ((data_payload_left[3] & 1 << 4) ? 1 : 0) << 2;
 
       data_buffer[10] = 0 << 0;
     }
@@ -168,21 +168,21 @@ int main(void) {
                        ((data_payload_right[1] & 1<<2) ? 1:0) << 3 |
                        ((data_payload_right[1] & 1<<1) ? 1:0) << 4;
 
-      data_buffer[7] = ((data_payload_right[1] & 1 << 0) ? 1 : 0) << 0 |
-                       ((data_payload_right[2] & 1 << 7) ? 1 : 0) << 1 |
-                       ((data_payload_right[2] & 1 << 6) ? 1 : 0) << 2 |
-                       ((data_payload_right[2] & 1 << 5) ? 1 : 0) << 3 |
-                       ((data_payload_right[2] & 1 << 4) ? 1 : 0) << 4;
+      data_buffer[7] = ((data_payload_right[1] & 1<<0) ? 1:0) << 0 |
+                       ((data_payload_right[2] & 1<<7) ? 1:0) << 1 |
+                       ((data_payload_right[2] & 1<<6) ? 1:0) << 2 |
+                       ((data_payload_right[2] & 1<<5) ? 1:0) << 3 |
+                       ((data_payload_right[2] & 1<<4) ? 1:0) << 4;
 
-      data_buffer[9] = ((data_payload_right[2] & 1 << 3) ? 1 : 0) << 0 |
-                       ((data_payload_right[2] & 1 << 2) ? 1 : 0) << 1 |
-                       ((data_payload_right[2] & 1 << 1) ? 1 : 0) << 2 |
-                       ((data_payload_right[2] & 1 << 0) ? 1 : 0) << 3 |
-                       ((data_payload_right[3] & 1 << 7) ? 1 : 0) << 4;
+      data_buffer[9] = ((data_payload_right[2] & 1<<3) ? 1:0) << 0 |
+                       ((data_payload_right[2] & 1<<2) ? 1:0) << 1 |
+                       ((data_payload_right[2] & 1<<1) ? 1:0) << 2 |
+                       ((data_payload_right[2] & 1<<0) ? 1:0) << 3 |
+                       ((data_payload_right[3] & 1<<7) ? 1:0) << 4;
 
-      data_buffer[11] = ((data_payload_right[3] & 1 << 6) ? 1 : 0) << 0 |
-                        ((data_payload_right[3] & 1 << 5) ? 1 : 0) << 1 |
-                        ((data_payload_right[3] & 1 << 4) ? 1 : 0) << 2;
+      data_buffer[11] = ((data_payload_right[3] & 1<<6) ? 1:0) << 0 |
+                        ((data_payload_right[3] & 1<<5) ? 1:0) << 1 |
+                        ((data_payload_right[3] & 1<<4) ? 1:0) << 2;
     }
 
     // checking for a poll request from QMK
