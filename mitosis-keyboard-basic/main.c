@@ -1,5 +1,5 @@
-#define COMPILE_RIGHT
-//#define COMPILE_LEFT
+// #define COMPILE_RIGHT
+#define COMPILE_LEFT
 
 #include "mitosis.h"
 #include "nrf_drv_config.h"
@@ -23,7 +23,7 @@ static uint8_t data_payload[TX_PAYLOAD_LENGTH];                ///< Payload to s
 static uint8_t ack_payload[NRF_GZLL_CONST_MAX_PAYLOAD_LENGTH]; ///< Placeholder for received ACK payloads from Host.
 
 // Debounce time (dependent on tick frequency)
-#define DEBOUNCE 3
+#define DEBOUNCE 5
 #define ACTIVITY 500
 
 // Key buffers
